@@ -4,6 +4,7 @@ contains
 
 
 ! A list of N MxM matrices list_dim = \(M,M,N\)
+! Check indexes
 attributes(global) function BatchExp(mat_list,num_threads)
                         integer, dimension(3) :: list_dim
                         integer :: num_threads
