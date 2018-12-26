@@ -1,0 +1,6 @@
+gfortran -o -march=native -O3 -mavx2 mul.f95 
+Debugging with gdb -> layout asm -> check code for illegal location
+-> objdump -D main
+-> Illegal instruction was vextracti128
+Was produced by -mavx2 option
+
