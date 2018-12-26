@@ -1,0 +1,2 @@
+Effective GPU implementation would require own implementation of 
+matrix multiplication on the gpu
