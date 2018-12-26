@@ -1,7 +1,17 @@
 module gpuexpm
   IMPLICIT NONE
 contains
-subroutine expm(mat,mat_out,num_terms)
+
+
+! A list of N MxM matrices list_dim = \(M,M,N\)
+attributes(global) function BatchExp(mat_list,num_threads)
+                        integer, dimension(3) :: list_dim
+                        integer :: num_threads
+                        double complex , dimension(:,:,:) :: mat_list
+                        double complex , dimension(size(mat_list,1),size(mat_list,2),size(mat_list,3)) :: BatchExp
+                   end function
+
+attributes(device) subroutine expm(mat,mat_out,num_terms)
         integer , intent(in) :: num_terms
         double complex, dimension(:,:), intent(in) :: mat 
 
@@ -50,7 +60,7 @@ subroutine expm(mat,mat_out,num_terms)
         end do
 end subroutine  
 
-                function MyMatmul(a,b)
+            attributes(device) function MyMatmul(a,b)
                         double complex,dimension(:,:) :: a,b
                         double complex,dimension(size(a,1),size(a,2)) :: MyMatmul
                         integer :: i,k,j,n

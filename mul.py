@@ -17,7 +17,7 @@ def my_expm(a,num_terms):
 #number of terms in taylor expansion
 N=15
 # 18
-max_pot = 18
+max_pot = 9
 
 
 for pot in range(0,max_pot+1):
