@@ -16,7 +16,7 @@ subroutine cudaexpm(mat_list_in,mat_list_out)
         tBlock = dim3(1024,1,1)
         grid = dim3(ceiling(real(N)/tBlock%x),1,1)
 	mat_dev_in=mat_list_in
-	call BatchExp<<<grid, tBlock>>>(mat_dev_in, mat_dev_out)
+        call BatchExp<<<grid, tBlock>>>(mat_dev_in, mat_dev_out)
 	mat_list_out =mat_dev_out
         end subroutine 
 
