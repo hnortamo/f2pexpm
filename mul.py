@@ -1,10 +1,19 @@
 import numpy as np
-from scipy.linalg import expm3
+
+
+# expm3 is deprecated and less accurate than expm
+
+# expm3 uses the taylor expansion, while expm uses the pade approximation
+# Taylor expansion is fine for matrices with small values.
+
+from scipy.linalg import expm3,expm
 import libexpmf
 import time
 
 # Fortran function is generated through
 # f2py3 -c expmf.f95 -m libexpmf
+
+
 
 
 def my_expm(a,num_terms):
@@ -17,7 +26,7 @@ def my_expm(a,num_terms):
 #number of terms in taylor expansion
 N=15
 # 18
-max_pot = 9
+max_pot = 15
 
 
 for pot in range(0,max_pot+1):

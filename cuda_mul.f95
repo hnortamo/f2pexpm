@@ -61,20 +61,23 @@ attributes(device) subroutine expm(mat,mat_out,num_terms)
         end do
 end subroutine  
 
-            attributes(device) function MyMatmul(a,b)
-                        double complex,dimension(:,:) :: a,b
-                        double complex,dimension(size(a,1),size(a,2)) :: MyMatmul
-                        integer :: i,k,j,n
-                        n= size(a,1)
-                        do i=1,n
-                                do j=1,n
-                                        do k=1,n
-                                                MyMatmul(i,j)=MyMatmul(i,j)+A(i,k)*B(k,j)
-                                        end do
-                                end do
-                        end do
-                end function
+attributes(device) function Mymatmul(a,b)
+        integer :: j,i,n,k
+        double complex :: tmp
+        double complex,dimension(:,:) :: a,b
+        double complex, dimension(size(a,1),size(a,1)) :: mymatmul
+        n  = size(a,1)
 
+     do j=1,n
+         do i=1,n
+            tmp = 0.0  
+            do k=1,n
+               tmp = tmp + a(i,k) * b(k,j)
+            end do
+            mymatmul(i,j) = tmp
+         end do
+      end do
+ end function
 end module gpuexpm
 
 
