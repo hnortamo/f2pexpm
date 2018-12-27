@@ -1,16 +1,40 @@
 module gpuexpm
+  use cudafor
   IMPLICIT NONE
 contains
 
 
+subroutine cudaexpm(mat_list_in,mat_list_out)
+        
+        double complex , dimension(:,:,:),intent(in) :: mat_list_in
+        double complex, dimension(:,:,:),intent(out) :: mat_list_out
+        
+        double complex, device,dimension(size(mat_list_in,1),size(mat_list_in,2),size(mat_list_in,3)) :: mat_dev_in,mat_dev_out
+        type(dim3) :: grid, tBlock
+        integer :: N
+        N= size(mat_list_in,3)
+        tBlock = dim3(1024,1,1)
+        grid = dim3(ceiling(real(N)/tBlock%x),1,1)
+	mat_dev_in=mat_list_in
+	call BatchExp<<<grid, tBlock>>>(mat_dev_in, mat_dev_out)
+	mat_list_out =mat_dev_out
+        end subroutine 
+
+
+
 ! A list of N MxM matrices list_dim = \(M,M,N\)
 ! Check indexes
-attributes(global) function BatchExp(mat_list,num_threads)
-                        integer, dimension(3) :: list_dim
-                        integer :: num_threads
-                        double complex , dimension(:,:,:) :: mat_list
-                        double complex , dimension(size(mat_list,1),size(mat_list,2),size(mat_list,3)) :: BatchExp
-                   end function
+attributes(global) subroutine BatchExp(mat_list_in,mat_list_out)
+                        integer :: i,n
+                        double complex , dimension(:,:,:),intent(in) :: mat_list_in
+                        double complex, dimension(:,:,:),intent(out) :: mat_list_out
+                        n = size(mat_list_in,3)
+
+
+                        i = blockDim%x * (blockIdx%x - 1) + threadIdx%x
+                        if (i <= n) call expm(mat_list_in(:,:,i),mat_list_out(:,:,i),15) 
+
+                    end subroutine
 
 attributes(device) subroutine expm(mat,mat_out,num_terms)
         integer , intent(in) :: num_terms
