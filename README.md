@@ -2,7 +2,7 @@
 
 
 ## Dependencies
- - Python 3 
+ - Python 3 (confirmed working with python/3.5.3) 
  - Numpy and f2py/f2py3 depending on the naming scheeme
  - Fortran compiler
  - Scipy for the testing
