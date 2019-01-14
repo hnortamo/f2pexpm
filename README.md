@@ -16,3 +16,7 @@ A minimum working example can be found in example.py and
 some performance and accuracy test can be found in test.py
 Use the function my_expm in the same way you would use scipys expm and expm3
 The fortran code can be found in expmf.f95 .
+
+
+## Performance
+Works very well for small matrices

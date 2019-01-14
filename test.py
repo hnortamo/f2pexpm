@@ -38,12 +38,17 @@ def myPy_expm(A,n):
 
 #number of terms in taylor expansion
 N=15
+
+
+# Matrix dimension
+n = 4
+
 # 18
 max_pot = 15
 print("{:<25} {:<25} {:<25} {:<25}".format("Fortran_duration", "Python_Duration", "Ratio", "Num_matrices"))
 print("-"*105)
 for pot in range(0,max_pot+1):
-    a = [np.random.randn(4,4)+np.random.randn(4,4)*1j for i in range(0,2**pot) ]
+    a = [np.random.randn(n,n)+np.random.randn(n,n)*1j for i in range(0,2**pot) ]
 
     stf=time.time()
     c_fortran=[my_expm(a[i],N) for i in range(0,len(a))]
@@ -70,10 +75,10 @@ for m in magnitudes:
     acc_my=0.0
     acc_myPy =0.0
     for i in range(0,N_checks):
-        check = m*(np.random.randn(4,4)+np.random.randn(4,4)*1j)
+        check = m*(np.random.randn(n,n)+np.random.randn(n,n)*1j)
         norm_expm3 = norm(expm3(check,N))
         norm_my_expm  = norm(my_expm(check,N))
-        norm_expm =norm(expm(check,N))
+        norm_expm =norm(expm(check))
         norm_myPy_expm = norm(myPy_expm(check,N))
         acc_3 += np.abs(norm_expm-norm_expm3)/norm_expm
         acc_my += np.abs(norm_expm-norm_my_expm)/norm_expm
