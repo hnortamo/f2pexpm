@@ -9,11 +9,13 @@ import libexpmf
 
 
 # Use in the same way as pythons own expm or expm3
-def my_expm(a,num_terms=15):
-    ret_mat =np.copy(a,order='F')
+
+def my_expm(a,num_terms):
+    ret_mat =np.zeros(np.shape(a),dtype=complex,order='F')
     libexpmf.expm(a,ret_mat,num_terms)
     return ret_mat
 
-a = np.random.randn(4,4)+np.random.randn(4,4)*1j
-my_expm(a)
+a = np.random.randn(16,16)+np.random.randn(16,16)*1j
+for i in range(0,100000):
+    my_expm(a)
 print("Done")

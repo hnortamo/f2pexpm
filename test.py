@@ -16,9 +16,8 @@ from math import factorial
 
 
 
-
 def my_expm(a,num_terms):
-    ret_mat =np.copy(a,order='F')
+    ret_mat =np.zeros(np.shape(a),dtype=complex,order='F')
     libexpmf.expm(a,ret_mat,num_terms)
     return ret_mat
 
@@ -37,14 +36,14 @@ def myPy_expm(A,n):
 
 
 #number of terms in taylor expansion
-N=15
+N=20
 
 
 # Matrix dimension
-n = 4
+n = 16
 
 # 18
-max_pot = 15
+max_pot = 13
 print("{:<25} {:<25} {:<25} {:<25}".format("Fortran_duration", "Python_Duration", "Ratio", "Num_matrices"))
 print("-"*105)
 for pot in range(0,max_pot+1):
