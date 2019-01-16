@@ -15,7 +15,7 @@ def my_expm(a,num_terms=20):
     libexpmf.expm(a,ret_mat,num_terms)
     return ret_mat
 
-a = np.random.randn(16,16)+np.random.randn(16,16)*1j
+a = np.random.randn(4,4)+np.random.randn(4,4)*1j
 for i in range(0,100000):
     my_expm(a)
 print("Done")
