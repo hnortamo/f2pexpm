@@ -10,7 +10,7 @@ import libexpmf
 
 # Use in the same way as pythons own expm or expm3
 
-def my_expm(a,num_terms):
+def my_expm(a,num_terms=20):
     ret_mat =np.zeros(np.shape(a),dtype=complex,order='F')
     libexpmf.expm(a,ret_mat,num_terms)
     return ret_mat
